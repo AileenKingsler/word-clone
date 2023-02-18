@@ -1,11 +1,11 @@
 import React from 'react';
 
-function GuessInput() {
+function GuessInput({ addGuessToList }) {
   const [value, setValue] = React.useState('');
 
   const submitHandler = (event) => {
     event.preventDefault();
-    console.log(value);
+    addGuessToList(value);
     setValue('');
   };
 
@@ -18,7 +18,8 @@ function GuessInput() {
         required
         minLength={5}
         maxLength={5}
-        pattern="[A-Z]{5}"
+        pattern="[a-zA-Z]{5}"
+        title="5 letter word"
         value={value}
         onChange={(event) => {
           setValue(event.target.value.toUpperCase());
