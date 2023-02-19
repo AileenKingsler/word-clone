@@ -1,21 +1,22 @@
 import React from 'react';
 
-function GuessInput({ addGuessToList }) {
+function GuessInput({ submitHandler, isDisabled }) {
   const [value, setValue] = React.useState('');
 
-  const submitHandler = (event) => {
+  const onSubmit = (event) => {
     event.preventDefault();
-    addGuessToList(value);
+    submitHandler(value);
     setValue('');
   };
 
   return (
-    <form className="guess-input-wrapper" onSubmit={submitHandler}>
+    <form className="guess-input-wrapper" onSubmit={onSubmit}>
       <label htmlFor="guess-input">Enter guess:</label>
       <input
         id="guess-input"
         type="text"
         required
+        disabled={isDisabled}
         minLength={5}
         maxLength={5}
         pattern="[a-zA-Z]{5}"
