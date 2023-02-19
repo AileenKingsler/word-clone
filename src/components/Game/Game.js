@@ -2,6 +2,7 @@ import React from 'react';
 
 import { sample } from '../../utils';
 import { WORDS } from '../../data';
+import { checkGuess } from '../../game-helpers';
 import GuessInput from '../GuessInput/GuessInput';
 import GuessResults from '../GuessResults/GuessResults';
 
@@ -14,7 +15,7 @@ function Game() {
   const [guessList, setGuessList] = React.useState([]);
 
   const addGuessToList = (guess) => {
-    setGuessList([...guessList, guess]);
+    setGuessList([...guessList, checkGuess(guess, answer)]);
   };
 
   return (
