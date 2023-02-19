@@ -8,6 +8,7 @@ import GuessInput from '../GuessInput/GuessInput';
 import GuessResults from '../GuessResults/GuessResults';
 import WonBanner from '../WonBanner/WonBanner';
 import LostBanner from '../LostBanner/LostBanner';
+import Keyboard from '../Keyboard/Keyboard';
 
 // Pick a random word on every pageload.
 const answer = sample(WORDS);
@@ -16,6 +17,7 @@ console.info({ answer });
 
 function Game() {
   const [guessList, setGuessList] = React.useState([]);
+  const [lettersStatus, setLettersStatus] = React.useState({});
   const [status, setStatus] = React.useState('running');
 
   const submitHandler = (guess) => {
@@ -23,6 +25,13 @@ function Game() {
     const nextGuessList = [...guessList, newGuess];
 
     setGuessList(nextGuessList);
+
+    const newLettersStatus = {};
+    newGuess.forEach(({ letter, status }) => {
+      newLettersStatus[letter] = status;
+    });
+
+    setLettersStatus({ ...lettersStatus, ...newLettersStatus });
 
     const doesWin = newGuess.every((letter) => letter.status === 'correct');
 
@@ -43,6 +52,7 @@ function Game() {
         submitHandler={submitHandler}
         isDisabled={status !== 'running'}
       />
+      <Keyboard lettersStatus={lettersStatus} />
       {status === 'won' && <WonBanner guessesCount={guessList.length} />}
       {status === 'lost' && <LostBanner answer={answer} />}
     </>
